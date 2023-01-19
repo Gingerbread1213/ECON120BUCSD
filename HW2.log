@@ -1,0 +1,190 @@
+----------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/liuhaojie/Desktop/ECON120BUCSD/HW2.log
+  log type:  text
+ opened on:  18 Jan 2023, 21:21:46
+
+. 
+. **** summarize data
+. describe
+
+Contains data from baseballsalaries.dta
+  obs:            30                          
+ vars:             5                          18 Jan 2012 19:34
+----------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------------------------------
+team            str12   %12s                  Team
+playoffs        byte    %8.0g                 1=made playoffs, 0=did not make playoffs
+payroll         double  %12.0g                Payroll in dollars
+wins            int     %8.0g                 Wins
+losses          int     %8.0g                 Losses
+----------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. summarize
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        team |          0
+    playoffs |         30    .2666667    .4497764          0          1
+     payroll |         30    42170.28    17830.28     8317.5   73995.92
+        wins |         30          81    13.52902         54        114
+      losses |         30          81    13.45491         48        108
+
+. 
+. ***********************************************
+. 
+. *Q1
+. *a. What is the average payroll for these thirty teams? (note: the payroll variable is in thousands of dollars
+> ) Is there a lot of variation in payroll or minimal variation in payroll?
+. 
+. summarize payroll
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     payroll |         30    42170.28    17830.28     8317.5   73995.92
+
+. di "Average payroll(in thousands) = " r(mean)
+Average payroll(in thousands) = 42170.282
+
+. * The average is 42170280 dollars, which has a large standard deviation of 17830280 dollars
+. 
+. *b. What is the average percentage of games won by a team?
+. 
+. generate total_games = wins + losses
+
+. generate percentage_won = (wins/total_games)*100
+
+. 
+. label var total_games "Total games played by a team"
+
+. label var percentage_won "Average percentage of game won"
+
+. 
+. sum percentage_won
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+percentage~n |         30    49.99632    8.327284   33.33333   70.37037
+
+. 
+. di "Percentage of games won by a team = " r(mean)
+Percentage of games won by a team = 49.996319
+
+. 
+. *c Graph a scatterplot of the team's winning percentage versus payroll. (hint: type help graph twoway in Stata
+> ).
+. 
+. 
+. 
+. twoway scatter percentage_won payroll, title("Winning percentage vs. payroll")
+
+. 
+. graph export "1c_graph.png", replace
+(file /Users/liuhaojie/Desktop/ECON120BUCSD/1c_graph.png written in PNG format)
+
+. 
+. *d What is the difference in average payroll for teams which make the playoffs compared to teams which do not?
+>  Is this difference (i) large in a real world sense, (ii) statistically significant (test this formally), and 
+> (iii) likely to be causal?
+. 
+. summarize payroll if playoffs ==1
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     payroll |          8    58209.49    8083.251      48294    73813.7
+
+. generate pass_payroll_mean = r(mean)
+
+. generate pass_payroll = payroll if playoffs ==1
+(22 missing values generated)
+
+. 
+. summarize payroll if playoffs ==0
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     payroll |         22    36337.84    16840.77     8317.5   73995.92
+
+. generate no_pass_payroll_mean = r(mean)
+
+. generate no_pass_payroll = payroll if playoffs ==0
+(8 missing values generated)
+
+. 
+. di "Difference in average payroll between playoffs teams = " pass_payroll_mean-no_pass_payroll_mean
+Difference in average payroll between playoffs teams = 21871.648
+
+. di "Which is a large difference in real world" 
+Which is a large difference in real world
+
+. 
+. ttest pass_payroll == no_pass_payroll, unpaired
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+pass_p~l |       8    58209.49     2857.86     8083.25    51451.72    64967.26
+no_pas~l |      22    36337.84    3590.465    16840.77    28871.06    43804.62
+---------+--------------------------------------------------------------------
+combined |      30    42170.28    3255.349    17830.28    35512.35    48828.22
+---------+--------------------------------------------------------------------
+    diff |            21871.65    6248.319                9072.546    34670.75
+------------------------------------------------------------------------------
+    diff = mean(pass_payroll) - mean(no_pass_payroll)             t =   3.5004
+Ho: diff = 0                                     degrees of freedom =       28
+
+    Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = 0.9992         Pr(|T| > |t|) = 0.0016          Pr(T > t) = 0.0008
+
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+end of do-file
+
+. help correlate
+
+. correlate pass_payroll
+(obs=8)
+
+             | pass_p~l
+-------------+---------
+pass_payroll |   1.0000
+
+
+. correlate pass_payroll==no_pass_payroll
+== invalid name
+r(198);
+
+. pwcorr pass_payroll, playoffs, no_pass_payroll
+invalid 'no_pass_payroll' 
+r(198);
+
+. pwcorr pass_payroll, playoffs, no_pass_payroll, obs
+invalid 'no_pass_payroll' 
+r(198);
+
+. pwcorr pass_payroll playoffs no_pass_payroll
+
+             | pass_p~l playoffs no_pas~l
+-------------+---------------------------
+pass_payroll |   1.0000 
+    playoffs |        .   1.0000 
+no_pass_pa~l |        .        .   1.0000 
+
+. pwcorr payroll playoffs
+
+             |  payroll playoffs
+-------------+------------------
+     payroll |   1.0000 
+    playoffs |   0.5517   1.0000 
+
