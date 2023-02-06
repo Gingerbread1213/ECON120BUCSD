@@ -1,0 +1,56 @@
+---
+title: "lecture2&3"
+author: "Vincent"
+date: "2023-02-06"
+output: pdf_document
+---
+
+# Causality
+
+**Selection Bias in ATT with Observational Data**\newline
+
+$E[Y_i^1|D_1=1]-E[Y_i^0|D_1=1]+E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0]$\newline
+ATT:$E[Y_i^1|D_1=1]-E[Y_i^0|D_1=1]$\newline
+Selection Bias: $E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0]$\newline
+
+**Selection Bias in ATE with Observational Data**\newline
+
+$E[Y_i^1]-E[Y_i^0]+Pr(D_i=1)(E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0])+Pr(D_i=0)(E[Y_i^1|D_1=1]-E[Y_i^1|D_1=0])$\newline
+ATT: $E[Y_i^1]-E[Y_i^0]$\newline
+Selection Bias: $Pr(D_i=1)(E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0])+Pr(D_i=0)(E[Y_i^1|D_1=1]-E[Y_i^1|D_1=0])$\newline
+
+# Regression with a Single Regressor: Hypothesis Tests and Confidence Intervals
+
+**The Least Squares Assumptions:**\newline
+ 1. $E(u|X=x)=0$ (or we can say that there is no correlation between the focus and other factors, i.e. causality are 0)
+ 2. $(X_i,Y_i), i =1,...,n$, are i.i.d.
+ 3. Large outliers are rare $E(X4) < \inf, E(Y4) < \inf.$
+ 
+$\hat\beta$~$N(\beta_1, \frac{\sigma^2_v}{n\sigma^4_X})$, where $v_i=(X_i–\mu_X)u_i$
+In other word, the model is normally distributed
+
+
+$\hat{TestScore}=\beta_0+\beta_1STR$\newline
+$\beta_1$ is the slope of population regression line or the change in test score for a unit change in STR
+
+**t-testing**\newline
+$\beta_{1,0}=0$\newline
+$\frac{\hat{\beta_1}-\beta_{1,0}}{SE(\hat{\beta_1})}$\newline\newline
+
+**confidence interval**\newline
+$\beta_1=${$\hat{\beta_1}\pm C\times SE(\hat{\beta}_1)$}\newline
+$C$ is the critical value\newline
+
+
+The G-M theorem says that among all possible choices of {$w_i$}, the OLS weights yield the smallest $var(\hat{\beta_1})$
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,292 @@
+----------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/liuhaojie/Desktop/ECON120BUCSD/HW4_stata.log
+  log type:  text
+ opened on:   6 Feb 2023, 04:15:50
+
+. 
+. **** summarize data
+. describe
+
+Contains data from Growth.dta
+  obs:            65                          
+ vars:             8                          2 Aug 2006 09:11
+----------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------------------------------
+country_name    str19   %19s                  
+growth          float   %9.0g                 
+oil             float   %9.0g                 
+rgdp60          float   %9.0g                 
+tradeshare      float   %9.0g                 
+yearsschool     float   %9.0g                 
+rev_coups       float   %9.0g                 
+assasinations   float   %9.0g                 
+----------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. summarize
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+country_name |          0
+      growth |         65    1.942715     1.89712  -2.811944   7.156855
+         oil |         65           0           0          0          0
+      rgdp60 |         65    3103.785    2512.657   366.9999   9895.004
+  tradeshare |         65     .564703    .2892703    .140502   1.992616
+-------------+---------------------------------------------------------
+ yearsschool |         65    3.985077       2.542         .2      10.07
+   rev_coups |         65    .1674501    .2246798          0   .9703704
+assasinati~s |         65    .2775641    .4915284          0   2.466667
+
+. 
+. *On the text website, http://www.pearsonhighered.com/stock_watson/, you will find the data file Growth, which 
+> contains data on average growth rates from 1960 through 1995 for 65 countries, along with variables that are p
+> otentially related to growth.1 A detailed description is given in Growth_Description, also available on the we
+> bsite. In this exercise, you will investigate the relation- ship between growth and trade.
+. 
+. *a. Construct a scatterplot of average annual growth rate (Growth) on the average trade share (TradeShare). Do
+> es there appear to be a relationship between the variables?
+. 
+. twoway scatter growth tradeshare, title("Growth vs. TradeShare")
+
+. graph export "HW4_stata_a.png", replace
+(file /Users/liuhaojie/Desktop/ECON120BUCSD/HW4_stata_a.png written in PNG format)
+
+. 
+. di "The graph does appeal a positive relationship between these two factors"
+The graph does appeal a positive relationship between these two factors
+
+. 
+. *b. One country, Malta, has a trade share much larger than the other coun- tries. Find Malta on the scatterplo
+> t. Does Malta look like an outlier?
+. 
+. di "No, Malta does not looks like a outlier. Even the point is far away from the other data point, it still fa
+> ll into the belt of the regression line"
+No, Malta does not looks like a outlier. Even the point is far away from the other data point, it still fall int
+> o the belt of the regression line
+
+. 
+. *c. Using all observations, run a regression of Growth on TradeShare. What is the estimated slope? What is the
+>  estimated intercept? Use the regression to predict the growth rate for a country with a trade share of 0.5 an
+> d for another with a trade share equal to 1.0.
+. 
+. regress growth tradeshare
+
+      Source |       SS           df       MS      Number of obs   =        65
+-------------+----------------------------------   F(1, 63)        =      8.89
+       Model |  28.4885066         1  28.4885066   Prob > F        =    0.0041
+    Residual |  201.851551        63  3.20399287   R-squared       =    0.1237
+-------------+----------------------------------   Adj R-squared   =    0.1098
+       Total |  230.340057        64  3.59906339   Root MSE        =      1.79
+
+------------------------------------------------------------------------------
+      growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  tradeshare |   2.306434    .773485     2.98   0.004     .7607473     3.85212
+       _cons |   .6402653   .4899767     1.31   0.196    -.3388749    1.619405
+------------------------------------------------------------------------------
+
+. 
+. di "The estimated slope is 2.306, estimated intercept is 0.6403"
+The estimated slope is 2.306, estimated intercept is 0.6403
+
+. di "the growth rate for a country with a trade share of 0.5 is" 0.6303+(2.306*0.5)
+the growth rate for a country with a trade share of 0.5 is1.7833
+
+. di "the growth rate for a country with a trade share of 1.0 is"0.6303+(2.306*1)
+the growth rate for a country with a trade share of 1.0 is2.9363
+
+. 
+. *d. Estimate the same regression, excluding the data from Malta. Answer the same questions in (c).
+. 
+. generate no_Malta_growth = growth if country_name != "Malta"
+(1 missing value generated)
+
+. generate no_Malta_tradeshare = tradeshare if country_name != "Malta"
+(1 missing value generated)
+
+. 
+. 
+. regress no_Malta_growth no_Malta_tradeshare
+
+      Source |       SS           df       MS      Number of obs   =        64
+-------------+----------------------------------   F(1, 62)        =      2.90
+       Model |  9.28031557         1  9.28031557   Prob > F        =    0.0937
+    Residual |  198.527844        62  3.20206201   R-squared       =    0.0447
+-------------+----------------------------------   Adj R-squared   =    0.0292
+       Total |   207.80816        63  3.29854222   Root MSE        =    1.7894
+
+-------------------------------------------------------------------------------------
+    no_Malta_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+no_Malta_tradeshare |   1.680905   .9873624     1.70   0.094    -.2928046    3.654614
+              _cons |   .9574107   .5803727     1.65   0.104    -.2027378    2.117559
+-------------------------------------------------------------------------------------
+
+. 
+. di "The estimated slope is 1.6809, estimated intercept is 0.9574"
+The estimated slope is 1.6809, estimated intercept is 0.9574
+
+. di "the growth rate for a country with a trade share of 0.5 is" 0.9574+(1.6809*0.5)
+the growth rate for a country with a trade share of 0.5 is1.79785
+
+. di "the growth rate for a country with a trade share of 1.0 is"0.9574+(1.6809*1)
+the growth rate for a country with a trade share of 1.0 is2.6383
+
+. 
+. *e. Plot the estimated regression functions from (c) and (d). Using the scatterplot in (a), explain why the re
+> gression function that includes Malta is steeper than the regression function that excludes Malta.
+. 
+. twoway scatter no_Malta_growth no_Malta_tradeshare, title("No Malta Growth vs. TradeShare")
+
+. graph export "HW4_stata_d.png", replace
+(file /Users/liuhaojie/Desktop/ECON120BUCSD/HW4_stata_d.png written in PNG format)
+
+. 
+. di "Malta is strong outlier in this scatter plot, which strongly affect the rate of the regression"
+Malta is strong outlier in this scatter plot, which strongly affect the rate of the regression
+
+. 
+. *f. Where is Malta? Why is the Malta trade share so large? Should Malta be included or excluded from the analy
+> sis?
+. 
+. di "Malta is an island country in the Mediterranean Sea. It consists of an archipelago, between Italy and Liby
+> a, and is often considered a part of Southern Europe. Malta has a large tradeshare is because the economy of M
+> alta is mostly related on trade. Also, it should not be included from the analysis since it is one of the stro
+> ng outlier in this relationship"
+Malta is an island country in the Mediterranean Sea. It consists of an archipelago, between Italy and Libya, and
+>  is often considered a part of Southern Europe. Malta has a large tradeshare is because the economy of Malta i
+> s mostly related on trade. Also, it should not be included from the analysis since it is one of the strong out
+> lier in this relationship
+
+. 
+. 
+. 
+. clear all
+
+. 
+. use CollegeDistance.dta
+
+. 
+. describe
+
+Contains data from CollegeDistance.dta
+  obs:         3,796                          
+ vars:            14                          1 Aug 2006 17:31
+----------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------------------------------
+female          float   %9.0g                 
+black           float   %9.0g                 
+hispanic        float   %9.0g                 
+bytest          float   %9.0g                 
+dadcoll         float   %9.0g                 
+momcoll         float   %9.0g                 
+ownhome         float   %9.0g                 
+urban           float   %9.0g                 
+cue80           float   %9.0g                 
+stwmfg80        float   %9.0g                 
+dist            float   %9.0g                 
+tuition         float   %9.0g                 
+incomehi        float   %9.0g                 
+ed              float   %9.0g                 
+----------------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. summarize
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      female |      3,796    .5453109    .4980083          0          1
+       black |      3,796    .1925711     .394371          0          1
+    hispanic |      3,796    .1498946    .3570151          0          1
+      bytest |      3,796    51.00193    8.819251      28.95      71.36
+     dadcoll |      3,796    .2020548    .4015858          0          1
+-------------+---------------------------------------------------------
+     momcoll |      3,796    .1393572    .3463645          0          1
+     ownhome |      3,796    .8192835    .3848338          0          1
+       urban |      3,796     .243941    .4295141          0          1
+       cue80 |      3,796    7.654874     2.86577        1.4       24.9
+    stwmfg80 |      3,796    9.556499    1.364411       6.59      12.15
+-------------+---------------------------------------------------------
+        dist |      3,796    1.724921    2.133836          0         16
+     tuition |      3,796    .9131396    .2835778     .43418    1.40416
+    incomehi |      3,796    .2863541    .4521164          0          1
+          ed |      3,796    13.82929    1.813969         12         18
+
+. 
+. *The data file CollegeDistance contains data from a random sample of high school seniors interviewed in 1980 a
+> nd re-interviewed in 1986. In this exercise, you will use these data to investigate the relationship between t
+> he number of completed years of education for young adults and the distance from each student’s high school to
+>  the nearest four-year college. (Proximity to college lowers the cost of education, so that students who live 
+> closer to a four-year college should, on average, complete more years of higher education.) A detailed descrip
+> tion is given in College Distance_Description, also available on the Web site.1
+. 
+. *a. Run a regression of years of completed education (ED) on distance to the nearest college (Dist), where Dis
+> t is measured in tens of miles. (For example, Dist = 2 means that the distance is 20 miles.) What is the estim
+> ated intercept? What is the estimated slope? Use the estimated regression to answer this question: How does th
+> e average value of years of completed schooling change when colleges are built close to where students go to h
+> igh school?
+. 
+. regress ed dist
+
+      Source |       SS           df       MS      Number of obs   =     3,796
+-------------+----------------------------------   F(1, 3794)      =     28.48
+       Model |  93.0256754         1  93.0256754   Prob > F        =    0.0000
+    Residual |  12394.3568     3,794    3.266831   R-squared       =    0.0074
+-------------+----------------------------------   Adj R-squared   =    0.0072
+       Total |  12487.3825     3,795  3.29048287   Root MSE        =    1.8074
+
+------------------------------------------------------------------------------
+          ed |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        dist |  -.0733727   .0137498    -5.34   0.000    -.1003304    -.046415
+       _cons |   13.95586   .0377241   369.95   0.000     13.88189    14.02982
+------------------------------------------------------------------------------
+
+. di "The estimated slope is -0.0734, estimated intercept is 13.956"
+The estimated slope is -0.0734, estimated intercept is 13.956
+
+. di "As the distance of the nearest college increase, the years of completed school will decreases"
+As the distance of the nearest college increase, the years of completed school will decreases
+
+. 
+. *b. Bob’s high school was 20 miles from the nearest college. Predict Bob’s years of completed education using 
+> the estimated regression. How would the prediction change if Bob lived 10 miles from the nearest college?
+. 
+. di "the years of completed school will be " 13.956-0.0734*20 " for 20 miles from nearset college"
+the years of completed school will be 12.488 for 20 miles from nearset college
+
+. di "the years of completed school will be " 13.956-0.0734*10 " for 10 miles from nearset college"
+the years of completed school will be 13.222 for 10 miles from nearset college
+
+. 
+. *c. Does distance to college explain a large fraction of the variance in educational attainment across individ
+> uals? Explain.
+. 
+. di "It does not appeal a large fraction of the variance in educational attainment across individuals since tha
+> t the distance to college in not the only factor that will affect the completed years of college"
+It does not appeal a large fraction of the variance in educational attainment across individuals since that the 
+> distance to college in not the only factor that will affect the completed years of college
+
+. 
+. *d. What is the value of the standard error of the regression? What are the units for the standard error (mete
+> rs, grams, years, dollars, cents, or something else)?
+. 
+. di "SER of the regression is 93.026 in miles"
+SER of the regression is 93.026 in miles
+
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+end of do-file
+

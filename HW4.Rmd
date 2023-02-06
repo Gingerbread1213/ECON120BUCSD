@@ -1,0 +1,96 @@
+---
+title: "HW4"
+author: "Zihan Lin"
+date: "2023-02-06"
+output: pdf_document
+---
+```{r}
+library(tidyverse)
+```
+
+### 1. Stock and Watson, exercise 4.3 
+
+**A regression of average weekly earnings (AWE, measured in dollars) on age (measured in years) using a random sample of college-educated full-time workers aged 25–65 yields the following: $\hat{AWE} = 696.7 + 9.6 * Age, R^2 = 0.023, SER = 624.1.$**\newline\newline
+  **a. Explain what the coefficient values 696.7 and 9.6 mean.**\newline\newline
+  696.7 in the equation represents the value $\beta_0$ or the y intercept. Which can be described as the minimum average earning. 9.6 is $\beta_1$, or the estimator of the equation. Which can be described as the rate of the growth for AWE as the we increase the age.\newline\newline
+  **b.The standard error of the regression (SER) is 624.1. What are the units of measurement for the SER? (Dollars? Years? Or is SER unit free?)**\newline\newline
+  Dollars\newline\newline
+  **c. The regression R2 is 0.023. What are the units of measurement for the R2? (Dollars? Years? Or is R2 unit free?)**\newline\newline
+  Unit free\newline\newline
+  **d. What does the regression predict will be the earnings for a 25-year-old worker? For a 45-year-old worker?**\newline\newline
+  $\hat{AWE}_{25} = 696.7 + 9.6 * 25=936.7$ dollars\newline
+  $\hat{AWE}_{45} = 696.7 + 9.6 * 45=1128.7$ dollars\newline\newline
+  **e. Will the regression give reliable predictions for a 99-year-old worker? Why or why not?**\newline\newline
+  No, it will never give a reliable prediction for a 99-year-old worker, since the regression line is composed base on random sample of college-educated full-time workers aged 25–65. 99 is not inside this sample.\newline\newline
+  **f. Given what you know about the distribution of earnings, do you think it is plausible that the distribution of errors in the regression is normal? (Hint: Do you think that the distribution is symmetric or skewed? What is the smallest value of earnings, and is it consistent with a normal distribution?)**\newline\newline
+  No, the graph will skewed to the right, since there is more college-educated full-time workers are younger, the mean will shifted to the left. Therefore, it is not normal.\newline\newline
+  **g. The average age in this sample is 41.6 years. What is the average value of AWE in the sample? (Hint: Review Key Concept 4.2.)**\newline\newline
+  $\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1X_i$. Then we will have $\hat{AWE} = 696.7 + 9.6 * 41.6=1096.06$ dollars
+  
+### 2. Stock and Watson, exercise 4.4 
+
+**Read the box “The ‘Beta’ of a Stock” in Section 4.2.**\newline\newline
+  **a. Suppose the value of $\beta$ is greater than 1 for a particular stock. Show that the variance of $(R - R_f)$ for this stock is greater than the variance of $(R_m - R_t)$.**\newline\newline
+  $\beta > 1$, $R-R_f=\beta(R_m - R_t)$, then $(R_m - R_t)<(R-R_f)$\newline\newline
+  **b. Suppose the value of $\beta$ is less than 1 for a particular stock. Is it possible that the variance of $(R - Rf)$ for this stock is greater than the variance of $(Rm - Rt)$? (Hint: Don’t forget the regression error.)**\newline\newline
+  $\beta < 1$, $R-R_f=\beta(R_m - R_f)$, $R-R_f=\beta(R_m - R_f)+u_i$. We have that $\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1X_i+u_i$ where $u_i$ is the error factor of the regression line. We do have that the return can be lower for $(Rm - Rt)$ than $(R_m - R_t)$.\newline\newline
+  **c. In a given year, the rate of return on 3-month Treasury bills is 2.0% and the rate of return on a large diversified portfolio of stocks (the S&P 500) is 5.3%. For each company listed in the table in the box, use the estimated value of b to estimate the stock’s expected rate of return.**\newline\newline
+```{r}
+beta <- c(0.1,0.6,0.7,1.0,1.1,1.3,1.7)
+name <- c("Wal-Mart (discount retailer)","Coca-Cola (soft drinks)","Verizon (telecommunications)","Google (information technology)","General Electric (industrial)","Boeing (aircraft)","Bank of America (bank)")
+df<- data.frame(beta,name)
+df <- df%>% mutate("new_beta" = 0.053 + 0.02*(beta))
+df 
+```
+  
+ 
+### 3.  Show that the $R^2$ from the regression of Y on X is the same as the $R^2$ of the regression of X on Y. 
+
+$R^2=\frac{\Sigma^n_{i=1}(\hat{Y}_i-\bar{Y})^2}{\Sigma^n_{i=1}(Y_i-\bar{Y})^2}$\newline
+The regression $R^2$ is the fraction of the sample variance of Y explained by (or predicted by) X. Then if we have same sample variance of X and Y, then that the $R^2$ from the regression of Y on X is the same as the $R^2$ of the regression of X on Y.\newline\newline
+
+### 4.  Derive the least squares estimators when there is one regressor X.  You many follow the outline given in Appendix 4.2, but make sure to fill in the details (i.e., show your work, including necessary algebra). 
+
+function 1: $\frac{d}{d\beta_0}\Sigma^n_{i=1}(Y_i-\beta_0-\beta_1X_i)^2=-2\Sigma^n_{i=1}(Y_i-\beta_0-\beta_1X_i)$\newline
+function 2: $\frac{d}{d\beta_1}\Sigma^n_{i=1}(Y_i-\beta_0-\beta_1X_i)^2=-2\Sigma^n_{i=1}(Y_i-\beta_0-\beta_1X_i)X_i$\newline
+To set the square minimize, we will have that function 1 and function 2 equal to 0. Or $\bar Y-\hat \beta_0-\hat \beta_1 \bar X=0$.\newline
+For the statement above, we move the constant $\hat \beta_0$ to the other side of the equation, we can get the regression formula $\hat \beta_0=\bar Y-\hat \beta_1 \bar X$\newline\newline
+ 
+### 5.  Stock and Watson, exercise 5.2 (note: you do not need to compute the p-value for part b)
+
+**Suppose a researcher, using wage data on 250 randomly selected male workers and 280 female workers, estimates the OLS regression**\newline
+$\hat{AWE} = 12.52 + 2.12 * Male, R^2 = 0.06, SER = 4.2,SE(\beta_0)=0.23,SE(\beta_1)=0.36$\newline
+**where Wage is measured in dollars per hour and Male is a binary variable that is equal to 1 if the person is a male and 0 if the person is a female. Define the wage gender gap as the difference in mean earnings between men and women.**\newline\newline
+
+**a. What is the estimated gender gap?**\newline\newline
+$\hat \beta_1=2.12$\newline\newline
+**b. Is the estimated gender gap significantly different from 0? (Compute the p-value for testing the null hypothesis that there is no gender gap.)**\newline\newline
+$t=\frac{2.12-0}{0.36}=5.889$, p-value $=0$ There is significantly different from 0.\newline\newline
+**c. Construct a 95% confidence interval for the gender gap.**\newline\newline
+$\hat \beta_1 \pm 1.96\times SE(\hat \beta_1)=2.12\pm 1.96\times 0.36$.\newline
+Confidence Interval: {$1.4144, 2.8256$}\newline\newline
+**d. In the sample, what is the mean wage of women? Of men?**\newline\newline
+$\mu_{men}=12.52 + 2.12 * 1 = 14.64$\newline
+$\mu_{women}=12.52 + 2.12 * 0 = 12.52$\newline\newline
+**e. Another researcher uses these same data but regresses Wages on Female, a variable that is equal to 1 if the person is female and 0 if the person a male. What are the regression estimates calculated from this regression?**\newline\newline
+$\hat{AWE} = 14.64 - 2.12 * Female,R^2 = 0.06, SER = 4.2$\newline\newline
+
+### 6.  Stock and Watson, exercise 5.5
+
+**In the 1980s, Tennessee conducted an experiment in which kindergarten students were randomly assigned to “regular” and “small” classes and given standardized tests at the end of the year. (Regular classes contained approxi- mately 24 students, and small classes contained approximately 15 students.) Suppose, in the population, the standardized tests have a mean score of 925 points and a standard deviation of 75 points. Let SmallClass denote a binary variable equal to 1 if the student is assigned to a small class and equal to 0 otherwise. A regression of TestScore on SmallClass yields**\newline
+$\hat{TestScore} = 918.0 + 13.9 * SmallClass, R^2 = 0.01, SER = 74.6,SE(\beta_0)=1.6,SE(\beta_1)=2.5$\newline\newline
+**a. Do small classes improve test scores? By how much? Is the effect large? Explain.**\newline\newline
+Yes, small classes improve test scores by 13.9 points. This is a large effect base on $\hat \beta_0$\newline\newline
+**b. Is the estimated effect of class size on test scores statistically significant? Carry out a test at the 5% level.**\newline\newline
+$\frac{13.9-0}{2.5}=5.56$, p-value = $0$. It is statistically significant.\newline\newline
+**c. Construct a 99% confidence interval for the effect of SmallClass on TestScore.**\newline\newline
+$\hat \beta_1 \pm 2.576\times SE(\hat \beta_1)=13.9\pm 2.576\times 2.5$.\newline
+Confidence Interval: {$7.46, 20.34$}\newline\newline
+**d. Does least squares assumption 1 plausibly hold for this regression? Explain.**\newline\newline
+No its not. Base on the experiment, we can tell that there are many factors will affect the test score from a student. For instance, food they eat, their healthy condition, etc. Therefore, the effect from other factor $u_i$ can't be determined as zero at this point.\newline\newline
+
+
+
+
+
+
