@@ -3,21 +3,72 @@ title: "lecture2&3"
 author: "Vincent"
 date: "2023-02-06"
 output: pdf_document
+fig_width: 3 
+fig_height: 2 
 ---
+
+# Statistics 
+
+## Basic components
+
+**mean**: $E(Y)$\newline\newline
+**variance: **$E(Y-\mu_Y)^2$\newline\newline
+**skewness: **$\frac{E[(Y-\mu_Y)^3]}{\sigma_Y^3}$\newline\newline
+**kurtosis: **$\frac{E[(Y-\mu_Y)^4]}{\sigma_Y^4}$\newline\newline
+**covariance: **$cov(X,Z)=E[(X-\mu_X)(Z-\mu_Z)]=\sigma_{XZ}$
+**correlation: **$cor(X,Z)=\frac{cov(X,Z)}{\sqrt{var(X)var(Z)}}=\frac{\sigma_{xz}}{\sigma_x\sigma_z}=r_{xz}$\newline
+
+## Two sample testing
+
+**Estimator**\newline
+
+$\bar Y_s - \bar Y_l = \frac{1}{n_s}\Sigma^{n_s}_{i=1}Y_i-\frac{1}{n_l}\Sigma^{n_l}_{i=1}Y_i$\newline\newline
+
+**Example:**\newline
+
+![](/Users/liuhaojie/Desktop/ECON120BUCSD/D2.png){width=50%}
+
+
+**Hypothesis testing**\newline
+
+t-statistics:\newline
+Denote: s and l as small and large\newline
+
+$t=\frac{\bar Y_s -\bar Y_l}{\sqrt{\frac{s^2_s}{n_s}+\frac{s^2_l}{n_l}}}=\frac{\bar Y_s -\bar Y_l}{SE(\bar Y_s -\bar Y_l)}$\newline\newline
+$s^2_s=\frac{1}{n_s-1}\Sigma^{n_s}_{i=1}(Y_i-\bar Y_s)^2$\newline
+
+**Example: **\newline
+![](/Users/liuhaojie/Desktop/ECON120BUCSD/D1.png){width=50%}\newline\newline
+
+**Confidence Interval**\newline\newline
+
+CI = $(\bar Y_s-\bar Y_l)\pm CV \times SE(\bar Y_s-\bar Y_l)$\newline\newline
+
+**Law of Large number**
+
+![](/Users/liuhaojie/Desktop/ECON120BUCSD/D3.png){width=50%}
+
+## P-value
+
+p-value=$Pr_{H_0}[|\bar Y -\mu_{Y,0}|>|\bar Y^{act}-\mu_{Y,0}|]$
+
+variances of sample Y = $s^2_Y=\frac{1}{n-1}\Sigma^n_{i=1}(Y_i-\bar Y)^2$
+
+
 
 # Causality
 
 **Selection Bias in ATT with Observational Data**\newline
 
-$E[Y_i^1|D_1=1]-E[Y_i^0|D_1=1]+E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0]$\newline
-ATT:$E[Y_i^1|D_1=1]-E[Y_i^0|D_1=1]$\newline
-Selection Bias: $E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0]$\newline
+$E[Y_i^1|D_1=1]-E[Y_i^0|D_1=1]+E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0]$\newline\newline
+ATT:$E[Y_i^1|D_1=1]-E[Y_i^0|D_1=1]$\newline\newline
+Selection Bias: $E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0]$\newline\newline
 
 **Selection Bias in ATE with Observational Data**\newline
 
-$E[Y_i^1]-E[Y_i^0]+Pr(D_i=1)(E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0])+Pr(D_i=0)(E[Y_i^1|D_1=1]-E[Y_i^1|D_1=0])$\newline
-ATT: $E[Y_i^1]-E[Y_i^0]$\newline
-Selection Bias: $Pr(D_i=1)(E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0])+Pr(D_i=0)(E[Y_i^1|D_1=1]-E[Y_i^1|D_1=0])$\newline
+$E[Y_i^1]-E[Y_i^0]+Pr(D_i=1)(E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0])+Pr(D_i=0)(E[Y_i^1|D_1=1]-E[Y_i^1|D_1=0])$\newline\newline
+ATE: $E[Y_i^1]-E[Y_i^0]$\newline\newline
+Selection Bias: $Pr(D_i=1)(E[Y_i^0|D_1=1]-E[Y_i^0|D_1=0])+Pr(D_i=0)(E[Y_i^1|D_1=1]-E[Y_i^1|D_1=0])$\newline\newline
 
 # Regression with a Single Regressor: Hypothesis Tests and Confidence Intervals
 
@@ -35,7 +86,13 @@ $\beta_1$ is the slope of population regression line or the change in test score
 
 **t-testing**\newline
 $\beta_{1,0}=0$\newline
-$\frac{\hat{\beta_1}-\beta_{1,0}}{SE(\hat{\beta_1})}$\newline\newline
+$t=\frac{\hat{\beta_1}-\beta_{1,0}}{SE(\hat{\beta_1})}$\newline\newline
+
+**SE($\hat\beta_1$)**\newline
+
+$var(\hat\beta_1)=\frac{var[(X_i-\mu_x)u_i]}{n(\sigma^2_X)^2}$, where $v_i=(X_i-\mu_X)u_i$\newline
+
+$\hat{\sigma}^2_{\hat\beta_1}=\frac{1}{n}\times\frac{estimator\space of\space \sigma^2_v}{(estimator\space of\space \sigma^2_X)^2}=\frac{1}{n}\times\frac{\frac{1}{n-2}\Sigma^n_{i=1}\hat v^2_i}{\frac{1}{n}\Sigma^n_{i=1}(X_i-\hat X)^2}$ where $\hat v_i=(X_i-\bar X)u_i$
 
 **confidence interval**\newline
 $\beta_1=${$\hat{\beta_1}\pm C\times SE(\hat{\beta}_1)$}\newline

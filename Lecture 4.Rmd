@@ -1,0 +1,19 @@
+---
+title: "Lecture 4"
+author: "Haojie Liu"
+date: "2023-02-27"
+output: pdf_document
+---
+
+**The error u arises because of factors that influence Y but are not included in the regression function; so, there are always omitted variables.**
+**Sometimes, the omission of those variables can lead to bias in the OLS estimator.**
+
+
+**The bias in the OLS estimator that occurs as a result of an omitted factor is called omitted variable bias. For omitted variable bias to occur, the omitted factor “Z” must be:**
+
+**1. A determinant of Y (i.e. Z is part of u); and**
+We need consider that Z is one of the X, in OLS.
+
+**2. Correlated with the regressor X (i.e. $corr(Z,X) \ne 0$)**
+Also, Z have to have be dependent with the main regressor X.
+

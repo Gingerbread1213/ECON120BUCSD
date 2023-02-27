@@ -1,0 +1,54 @@
+---
+title: "HW 5"
+author: "Zihan Lin"
+date: "2023-02-27"
+output: pdf_document
+---
+
+## 1. Does TV viewing affect academic achievement? (Gentzkow and Shapiro, 2008)
+
+### a. Why would a regression of academic test scores on hours spent watching TV be unlikely to estimate a causal effect?
+
+A regression of academic test scores on hours spent watching TV would be unlikely to estimate a causal effect because of the potential presence of confounding variables. For example, individuals who watch more TV may also have less parental involvement, lower socioeconomic status, or less interest in academics, which could all independently affect academic achievement. Additionally, it is possible that individuals with lower academic achievement may watch more TV as a form of escape or distraction, rather than TV itself causing lower academic achievement.
+
+### b. How do Gentzkow and Shapiro answer the question of whether TV viewing affects academic achievement? In particular, what data do they use, and what is their natural experiment?
+
+Gentzkow and Shapiro use data from the introduction of cable television in the 1950s and 1960s as a natural experiment to answer the question of whether TV viewing affects academic achievement. Specifically, they exploit variation in the timing of cable television introduction across different geographic markets to identify the effect of TV viewing on test scores. They use data from the Coleman Report, a large-scale education study that collected test score data and information on family backgrounds, schools, and teachers for a nationally representative sample of children in the U.S.
+
+### c. What are the key findings of their study?
+
+The key findings of Gentzkow and Shapiro's study are that increased TV viewing has a negative effect on test scores. They find that the introduction of cable television reduced the test scores of children in affected areas by about 1/10th of a standard deviation. They also find that the effect is stronger for boys than for girls and for children from low-SES families.
+
+
+### d. Are their findings likely to be applicable today? Why or why not?
+
+Gentzkow and Shapiro's findings may not be directly applicable to today's context, as the media landscape has changed considerably since the 1950s and 1960s with the rise of the internet and streaming services. However, their study provides important insights into the potential effects of media on academic achievement and highlights the importance of considering potential confounding variables when estimating causal effects.
+
+
+## 2. Do violent movies cause violent behavior? (Dahl and DellaVigna, 2009)
+
+### a. Laboratory experiments which randomly show some individuals violent film clips and others non-violent film clips find an increase in aggression immediately after exposure. Do these types of experiments capture a causal effect, or just a correlation? Explain.
+
+Laboratory experiments that randomly assign individuals to watch violent or non-violent film clips and measure their aggression immediately after exposure can capture a correlation between viewing violent media and aggression, but they may not necessarily capture a causal effect. For example, individuals who are already predisposed to aggressive behavior may be more likely to choose to watch violent film clips in the first place, leading to a spurious correlation between viewing violent media and aggression.
+
+### b. How do Dahl and DellaVigna answer the question of whether violent movies cause violent crime? In particular, what data do they use, and what is the natural experiment?
+
+ Dahl and DellaVigna use a natural experiment to answer the question of whether violent movies cause violent crime. They exploit variation in the timing of movie releases across different countries and compare the rate of violent crime before and after the release of violent movies in those countries. They also use data on movie attendance and box office revenues to further explore the relationship between violent movies and violent crime.
+
+### c. What do they find during the evening hours? What is their explanation for this result?
+
+Dahl and DellaVigna find that during the evening hours, violent crime rates increase following the release of violent movies, and the effect is stronger for more popular movies. They argue that this is because the evening is the peak time for movie-going, and individuals who are already prone to aggression may be more likely to attend violent movies during this time, leading to an increase in violent crime.
+
+### d. What do they find in the early morning hours (i.e., after midnight)? What is their explanation for this result?
+
+In the early morning hours (after midnight), Dahl and DellaVigna find that violent crime rates decrease following the release of violent movies. They suggest that this may be because individuals who attend late-night showings of violent movies are less likely to be prone to aggression, as they are likely to be younger, less likely to be employed, and less likely to have family responsibilities.
+
+### e. Why are the laboratory results not necessarily at odds with the findings of Dahl and DellaVigna?
+
+The laboratory results are not necessarily at odds with the findings of Dahl and DellaVigna because they capture different types of effects. The laboratory experiments capture the immediate effect of violent
+
+#### Bonus: Which TV shows is Professor Dahl currently watching?
+
+
+
+
